@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 from .storage import make_backend
+from .anchor import anchor
 from .vault import Vault
 
 
@@ -31,6 +32,7 @@ def main(argv: list[str] | None = None) -> int:
     v = sub.add_parser("verify", help="check the ledger and test-restore a backup")
     v.add_argument("--seq", type=int)
     sub.add_parser("log", help="show the backup ledger")
+    sub.add_parser("anchor", help="timestamp the ledger head in Bitcoin (OpenTimestamps)")
     args = p.parse_args(argv)
 
     try:
@@ -47,6 +49,12 @@ def main(argv: list[str] | None = None) -> int:
             res = vault.verify(args.seq)
             print(json.dumps(res, indent=2))
             return 0 if res["ledger_ok"] and res.get("restore_ok") else 2
+        elif args.cmd == "anchor":
+            ok, msg = vault.ledger.verify()
+            if not ok:
+                raise RuntimeError(f"ledger check failed: {msg}")
+            cp, proof = anchor(vault.ledger.entries(), vault.home / "anchors")
+            print(f"Anchored {cp.name}; proof {proof} (run `ots upgrade` later, then `ots verify`)")
         elif args.cmd == "log":
             for e in vault.ledger.entries():
                 print(json.dumps(e, sort_keys=True))

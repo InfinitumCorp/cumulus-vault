@@ -83,3 +83,17 @@ def test_cli(tmp_path, capsys):
     assert main(["--home", home, "verify"]) == 0
     assert main(["--home", home, "restore", str(tmp_path / "r")]) == 0
     assert (tmp_path / "r" / "f.txt").read_text() == "cli"
+
+
+def test_anchor_builds_ots(tmp_path, monkeypatch):
+    from cumulus_vault import anchor as anc
+
+    v = make(tmp_path)
+    (tmp_path / "f").write_text("1")
+    v.backup(tmp_path / "f")
+    monkeypatch.setattr(anc, "submit", lambda d, c=None: [b"\x00" + b"x" * 8, b"\x00" + b"y" * 8])
+    cp, proof = anc.anchor(v.ledger.entries(), tmp_path / "anchors")
+    data = proof.read_bytes()
+    import hashlib
+    assert data.startswith(anc.HEADER + anc.OP_SHA256 + hashlib.sha256(cp.read_bytes()).digest())
+    assert anc.OP_FORK in data

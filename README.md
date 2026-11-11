@@ -10,6 +10,7 @@ Cumulus Vault is an open-source command-line tool from Infinitum Corporation®. 
 - **Filecoin storage.** The Lighthouse onramp stores data on Filecoin; a local content-addressed backend works offline and for tests.
 - **Tamper-evident ledger.** An append-only, SHA-256 hash-chained log of every backup and verification.
 - **Restore drills.** `cvault verify` re-downloads, decrypts and checks a backup against its recorded digest, then logs the result.
+- **Bitcoin anchoring.** `cvault anchor` timestamps the ledger head with OpenTimestamps, so anyone can check with the standard `ots` client that the backup history was not rewritten later.
 - **Safe restore.** Extraction blocks path traversal and special files.
 
 ## Quick start
@@ -21,6 +22,7 @@ cvault backup ./documents        # local backend by default
 cvault verify                    # ledger check + test restore
 cvault restore ./restored
 cvault log
+cvault anchor                    # Bitcoin timestamp of the ledger head (OpenTimestamps)
 ```
 
 ### Filecoin backend
