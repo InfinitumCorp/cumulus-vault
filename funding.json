@@ -1,0 +1,61 @@
+{
+  "$schema": "https://fundingjson.org/schema/v1.1.0.json",
+  "version": "v1.0.0",
+  "entity": {
+    "type": "organisation",
+    "role": "owner",
+    "name": "Infinitum Corporation",
+    "email": "theinfinitumcorp@gmail.com",
+    "description": "Infinitum Corporation is a Washington, D.C. cyber security and research company (est. 2021). We build and maintain free and open source security tools for small organizations, nonprofits and newsrooms that cannot afford enterprise security products.",
+    "webpageUrl": {
+      "url": "https://github.com/InfinitumCorp"
+    }
+  },
+  "projects": [
+    {
+      "guid": "cumulus-vault",
+      "name": "Cumulus Vault",
+      "description": "Cumulus Vault is a free and open source command-line tool for encrypted, verifiable backups. Files are encrypted on the client with ChaCha20-Poly1305 in authenticated chunks, stored on a local disk or on Filecoin, and recorded in an append-only, hash-chained ledger. Restore drills re-download, decrypt and check each backup against its recorded digest, and the ledger head can be timestamped in Bitcoin with OpenTimestamps so anyone can prove the backup history was not rewritten. It gives small organizations ransomware-resistant, tamper-evident backups without trusting a storage provider with plaintext.",
+      "webpageUrl": {
+        "url": "https://github.com/InfinitumCorp/cumulus-vault"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/InfinitumCorp/cumulus-vault"
+      },
+      "licenses": ["spdx:MIT", "spdx:Apache-2.0"],
+      "tags": ["security", "backup", "encryption", "ransomware", "filecoin", "bitcoin", "cli", "privacy"]
+    }
+  ],
+  "funding": {
+    "channels": [
+      {
+        "guid": "bank",
+        "type": "bank",
+        "address": "",
+        "description": "U.S. business bank account of Infinitum Corporation. Please email for transfer details."
+      }
+    ],
+    "plans": [
+      {
+        "guid": "developer-time",
+        "status": "active",
+        "name": "Development and maintenance",
+        "description": "Part-time developer time for scheduled backups and retention, direct Filecoin deals, automatic Bitcoin proof verification, multi-recipient organization keys, signed audit reports, packaging and documentation, plus ongoing security maintenance.",
+        "amount": 25000,
+        "currency": "USD",
+        "frequency": "yearly",
+        "channels": ["bank"]
+      },
+      {
+        "guid": "goodwill",
+        "status": "active",
+        "name": "Goodwill support",
+        "description": "Any amount to support the project.",
+        "amount": 0,
+        "currency": "USD",
+        "frequency": "one-time",
+        "channels": ["bank"]
+      }
+    ]
+  }
+}
